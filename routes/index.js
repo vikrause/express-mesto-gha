@@ -7,7 +7,7 @@ router.use('/users', usersRouter);
 router.use('/cards', cardsRouter);
 
 router.use((req, res) => {
-  res.status(NOT_FOUND).send('Не найдено');
+  res.status(NOT_FOUND).send({ message: 'Не найдено' });
 });
 
 module.exports = router;
