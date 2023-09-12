@@ -1,11 +1,11 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
+const { errors } = require('celebrate');
+const cookieParser = require('cookie-parser');
 const routes = require('./routes');
 const auth = require('./middlewares/auth');
 const errorHandler = require('./middlewares/errorHandler');
-const { errors } = require('celebrate');
-const cookieParser = require('cookie-parser');
 
 require('dotenv').config();
 

@@ -32,7 +32,7 @@ const deleteCard = (req, res, next) => {
     .then((card) => {
       if (card.owner.toString() === req.user._id) {
         Card.findByIdAndRemove(cardId)
-          .then((card) => res.send(card))
+          .then(() => res.status(200).send(card));
       } throw new ForbiddenError('Нет доступа');
     })
     .catch(next);
@@ -47,6 +47,7 @@ const likeCard = (req, res, next) => {
     throw new NotFound('Карточка не найдена');
   })
     .then((card) => res.send(card))
+
     .catch((err) => {
       if (err.name === 'CastError') {
         next(new BadRequest('Некорректные данные'));
@@ -65,6 +66,7 @@ const dislikeCard = (req, res, next) => {
     { new: true },
   ).orFail(() => new Error('NotFound'))
     .then((card) => res.send(card))
+
     .catch((err) => {
       if (err.name === 'CastError') {
         next(new BadRequest('Некорректные данные'));

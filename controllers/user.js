@@ -32,7 +32,7 @@ const getUserById = (req, res, next) => {
   return User.findById(userId)
     .then((user) => {
       if (!user) {
-        next(new NotFound('Пользователь не найден'));
+        throw new NotFound('Пользователь не найден');
       }
       return res.send(user);
     })
