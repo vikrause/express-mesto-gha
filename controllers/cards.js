@@ -31,9 +31,10 @@ const deleteCard = (req, res, next) => {
     })
     .then((card) => {
       if (card.owner.toString() === req.user._id) {
-        Card.findByIdAndRemove(cardId)
-          .then(() => res.status(200).send(card));
-      } throw new ForbiddenError('Нет доступа');
+        return Card.findByIdAndRemove(cardId)
+          .then(() => res.send(card));
+      }
+      throw new ForbiddenError('Нет доступа');
     })
     .catch(next);
 };
