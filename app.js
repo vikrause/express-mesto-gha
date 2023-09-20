@@ -21,7 +21,7 @@ app.use(cookieParser());
 const allowedCors = [
   'https://praktikum.tk',
   'http://praktikum.tk',
-  'https://domainname.vikrause1.nomoredomainsrocks.ru/cards',
+  'https://domainname.vikrause1.nomoredomainsrocks.ru',
   'localhost:3000',
 ];
 
