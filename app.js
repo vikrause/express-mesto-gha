@@ -8,7 +8,6 @@ const auth = require('./middlewares/auth');
 const errorHandler = require('./middlewares/errorHandler');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 
-
 require('dotenv').config();
 
 const { PORT = 3000 } = process.env;
@@ -22,7 +21,7 @@ const allowedCors = [
   'https://praktikum.tk',
   'http://praktikum.tk',
   'https://domainname.vikrause1.nomoredomainsrocks.ru',
-  'localhost:3000',
+  'http://localhost:3000',
 ];
 
 app.use(function(req, res, next) {
@@ -30,7 +29,6 @@ app.use(function(req, res, next) {
   const { method } = req;
   const DEFAULT_ALLOWED_METHODS = "GET,HEAD,PUT,PATCH,POST,DELETE";
   const requestHeaders = req.headers['access-control-request-headers'];
-
 
   if (allowedCors.includes(origin)) {
     res.header('Access-Control-Allow-Origin', origin);
