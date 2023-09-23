@@ -16,11 +16,12 @@ const createCard = (req, res, next) => {
   return Card.create({ name, link, owner })
     .then((card) => res.send(card))
     .catch((err) => {
-      if (err.name === 'ValidationError') {
+      if (err instanceof 'ValidationError') {
         next(new BadRequest('Некорректные данные'));
+      } else {
+        next(err);
       }
-    })
-    .catch(next);
+    });
 };
 
 const deleteCard = (req, res, next) => {
@@ -31,7 +32,7 @@ const deleteCard = (req, res, next) => {
     })
     .then((card) => {
       if (card.owner.toString() === req.user._id) {
-        return Card.deleteOne()
+        return Card.deleteOne({ id: cardId })
           .then(() => res.send(card));
       }
       return next(new ForbiddenError('Нет доступа'));
@@ -50,10 +51,11 @@ const likeCard = (req, res, next) => {
     .then((card) => res.send(card))
 
     .catch((err) => {
-      if (err.name === 'CastError') {
+      if (err instanceof 'CastError') {
         next(new BadRequest('Некорректные данные'));
+      } else {
+        next(err);
       }
-      next(err);
     });
 };
 
