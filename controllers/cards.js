@@ -32,7 +32,7 @@ const deleteCard = (req, res, next) => {
     })
     .then((card) => {
       if (card.owner.toString() === req.user._id) {
-        return Card.deleteOne({ card._id })
+        return Card.deleteOne({ _id: card._id, owner: req.user._id })
           .then(() => res.send(card));
       }
       return next(new ForbiddenError('Нет доступа'));
