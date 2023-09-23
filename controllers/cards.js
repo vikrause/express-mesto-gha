@@ -71,7 +71,7 @@ const dislikeCard = (req, res, next) => {
 
     .catch((err) => {
       if (err.name === 'CastError') {
-        next(new BadRequest('Некорректные данные'));
+        return next(new BadRequest('Некорректные данные'));
       }
       next(err);
     });
