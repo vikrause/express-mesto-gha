@@ -1,3 +1,7 @@
+const {
+  ValidationError,
+  CastError,
+} = require('mongoose').Error;
 const Card = require('../models/card');
 const NotFound = require('../errors/NotFoundError');
 const BadRequest = require('../errors/BadRequest');
@@ -12,11 +16,10 @@ const getCards = (req, res, next) => {
 const createCard = (req, res, next) => {
   const owner = req.user._id;
   const { name, link } = req.body;
-
   return Card.create({ name, link, owner })
     .then((card) => res.send(card))
     .catch((err) => {
-      if (err instanceof mongoose.Error.ValidationError) {
+      if (err instanceof ValidationError) {
         next(new BadRequest('Некорректные данные'));
       } else {
         next(err);
@@ -51,7 +54,7 @@ const likeCard = (req, res, next) => {
     .then((card) => res.send(card))
 
     .catch((err) => {
-      if (err instanceof mongoose.Error.CastError) {
+      if (err instanceof CastError) {
         next(new BadRequest('Некорректные данные'));
       } else {
         next(err);
@@ -68,9 +71,8 @@ const dislikeCard = (req, res, next) => {
     next(new NotFound('Карточка не найдена'));
   })
     .then((card) => res.send(card))
-
     .catch((err) => {
-      if (err instanceof mongoose.Error.CastError) {
+      if (err instanceof CastError) {
         return next(new BadRequest('Некорректные данные'));
       }
       next(err);
